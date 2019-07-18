@@ -1,13 +1,12 @@
 package app.com.firebaseauth;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,50 +18,63 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private Button btnChangeEmail, btnChangePassword, btnSendResetEmail, btnRemoveUser,
-            changeEmail, changePassword, sendEmail, remove, signOut;
+    @BindView(R.id.toolbar)
+    Toolbar toolbar;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_email)
+    TextView tvEmail;
+    @BindView(R.id.tv_pass)
+    TextView tvPass;
+    @BindView(R.id.tv_extra)
+    TextView tvExtra;
+    @BindView(R.id.old_email)
+    EditText oldEmail;
+    @BindView(R.id.new_email)
+    EditText newEmail;
+    @BindView(R.id.password)
+    EditText password;
+    @BindView(R.id.newPassword)
+    EditText newPassword;
+    @BindView(R.id.progressBar)
+    ProgressBar progressBar;
 
-    private EditText oldEmail, newEmail, password, newPassword;
-    private ProgressBar progressBar;
+    @BindView(R.id.change_email_button)
+    Button btnChangeEmail;
+    @BindView(R.id.change_password_button)
+    Button btnChangePassword;
+    @BindView(R.id.sending_pass_reset_button)
+    Button btnSendResetEmail;
+    @BindView(R.id.remove_user_button)
+    Button btnRemoveUser;
+    @BindView(R.id.changeEmail)
+    Button changeEmail;
+    @BindView(R.id.changePass)
+    Button changePassword;
+    @BindView(R.id.send)
+    Button sendEmail;
+    @BindView(R.id.remove)
+    Button remove;
+    @BindView(R.id.sign_out)
+    Button signOut;
+
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth firebaseAuth;
-
+    FirebaseUser user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        ButterKnife.bind(this);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
         setSupportActionBar(toolbar);
-
-        firebaseAuth = FirebaseAuth.getInstance();
-        final FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
-
-        authListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user == null) {
-                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
-                    finish();
-                }
-            }
-        };
-
-        btnChangeEmail = (Button) findViewById(R.id.change_email_button);
-        btnChangePassword = (Button) findViewById(R.id.change_password_button);
-        btnSendResetEmail = (Button) findViewById(R.id.sending_pass_reset_button);
-        btnRemoveUser = (Button) findViewById(R.id.remove_user_button);
-        changeEmail = (Button) findViewById(R.id.changeEmail);
-        changePassword = (Button) findViewById(R.id.changePass);
-        sendEmail = (Button) findViewById(R.id.send);
-        remove = (Button) findViewById(R.id.remove);
-        signOut = (Button) findViewById(R.id.sign_out);
-
         btnChangeEmail.setOnClickListener(this);
         btnChangePassword.setOnClickListener(this);
         btnSendResetEmail.setOnClickListener(this);
@@ -74,19 +86,78 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         remove.setOnClickListener(this);
         signOut.setOnClickListener(this);
 
-        oldEmail = (EditText) findViewById(R.id.old_email);
-        newEmail = (EditText) findViewById(R.id.new_email);
-        password = (EditText) findViewById(R.id.password);
-        newPassword = (EditText) findViewById(R.id.newPassword);
+        firebaseAuth = FirebaseAuth.getInstance();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
+        //If user session has timed out, send the user to login page.
+        authListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user == null) {
+                    startActivity(new Intent(MainActivity.this, LoginActivity.class));
+                    finish();
+                }
+            }
+        };
 
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
         }
     }
 
+    @Override
+    public void onClick(View view) {
+        if (view.getId() == R.id.sign_out) {
+            signOut();
+        } else if (view.getId() == R.id.change_email_button) {
+            changeEmail();
+        } else if (view.getId() == R.id.change_password_button) {
+
+        } else if (view.getId() == R.id.sending_pass_reset_button) {
+
+        } else if (view.getId() == R.id.remove_user_button) {
+
+        } else if (view.getId() == R.id.changeEmail) {
+            submitChangedEmail();
+        } else if (view.getId() == R.id.changePass) {
+
+        } else if (view.getId() == R.id.send) {
+
+        } else if (view.getId() == R.id.remove) {
+
+        }
+
+    }
+
+    private void changeEmail() {
+        newEmail.setVisibility(View.VISIBLE);
+        changeEmail.setVisibility(View.VISIBLE);
+    }
+
+    private void submitChangedEmail() {
+        progressBar.setVisibility(View.VISIBLE);
+        if (user != null && !newEmail.getText().toString().trim().equals("")) {
+            user.updateEmail(newEmail.getText().toString().trim())
+                    .addOnCompleteListener(this, new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if (task.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "Email address is updated. Please sign in with new email id!", Toast.LENGTH_LONG).show();
+                                signOut();
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to update email!", Toast.LENGTH_LONG).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+        } else if (newEmail.getText().toString().trim().equals("")) {
+            newEmail.setError("Enter Email");
+            progressBar.setVisibility(View.GONE);
+        }
+    }
 
     public void signOut() {
         firebaseAuth.signOut();
@@ -104,25 +175,5 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         authStateListener.onAuthStateChanged(firebaseAuth);
     }
 
-    @Override
-    public void onClick(View view) {
-        if (view.getId() == R.id.sign_out) {
-            signOut();
-        } else if (view.getId() == R.id.change_email_button) {
 
-        } else if (view.getId() == R.id.change_password_button) {
-
-        } else if (view.getId() == R.id.sending_pass_reset_button) {
-
-        } else if (view.getId() == R.id.remove_user_button) {
-
-        } else if (view.getId() == R.id.changePass) {
-
-        } else if (view.getId() == R.id.send) {
-
-        } else if (view.getId() == R.id.remove) {
-
-        }
-
-    }
 }
