@@ -1,7 +1,14 @@
 package app.com.firebaseauth;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Html;
+import android.text.Spannable;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.style.ForegroundColorSpan;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,26 +24,27 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.UserProfileChangeRequest;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_email)
     TextView tvEmail;
-    @BindView(R.id.tv_pass)
-    TextView tvPass;
-    @BindView(R.id.tv_extra)
-    TextView tvExtra;
+    @BindView(R.id.tv_user_id)
+    TextView tvUserId;
+    @BindView(R.id.tv_provider)
+    TextView tvProvider;
     @BindView(R.id.old_email)
     EditText oldEmail;
     @BindView(R.id.new_email)
     EditText newEmail;
+    @BindView(R.id.new_name)
+    EditText newName;
     @BindView(R.id.password)
     EditText password;
     @BindView(R.id.newPassword)
@@ -46,14 +54,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.change_email_button)
     Button btnChangeEmail;
+    @BindView(R.id.change_name_button)
+    Button changeNameButton;
     @BindView(R.id.change_password_button)
     Button btnChangePassword;
     @BindView(R.id.sending_pass_reset_button)
     Button btnSendResetEmail;
+
     @BindView(R.id.remove_user_button)
     Button btnRemoveUser;
     @BindView(R.id.changeEmail)
     Button changeEmail;
+    @BindView(R.id.changeName)
+    Button changeName;
     @BindView(R.id.changePass)
     Button changePassword;
     @BindView(R.id.send)
@@ -62,19 +75,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button remove;
     @BindView(R.id.sign_out)
     Button signOut;
+    @BindView(R.id.tv_refresh)
+    TextView tvRefresh;
+
 
     private FirebaseAuth.AuthStateListener authListener;
     private FirebaseAuth firebaseAuth;
     FirebaseUser user;
+    private String mName, mEmail, mUserId;
+    private String mExtra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        /*Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         toolbar.setTitle(getString(R.string.app_name));
-        setSupportActionBar(toolbar);
+        setSupportActionBar(toolbar);*/
         btnChangeEmail.setOnClickListener(this);
         btnChangePassword.setOnClickListener(this);
         btnSendResetEmail.setOnClickListener(this);
@@ -82,6 +100,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         changeEmail.setOnClickListener(this);
         changePassword.setOnClickListener(this);
+        changeNameButton.setOnClickListener(this);
+        changeName.setOnClickListener(this);
         sendEmail.setOnClickListener(this);
         remove.setOnClickListener(this);
         signOut.setOnClickListener(this);
@@ -100,6 +120,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 }
             }
         };
+
+        tvRefresh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                getUserDetails();
+            }
+        });
+
+
+
+        getUserDetails();
 
 
         if (progressBar != null) {
@@ -127,9 +158,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         } else if (view.getId() == R.id.remove) {
 
+        } else if(view == changeNameButton) {
+            changeName();
+        } else if(view == changeName) {
+            submitChangedName();
         }
 
     }
+
+    //get user details from firebase
+    private void getUserDetails() {
+        FirebaseAuth.AuthStateListener authStateListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if(user != null) {
+                    mEmail = user.getEmail();
+                    mName = user.getDisplayName();
+                    mUserId = user.getUid();
+                    mExtra = user.getProviderId();
+                }
+            }
+        };
+
+        authStateListener.onAuthStateChanged(firebaseAuth);
+        tvName.setText(mName);
+        tvEmail.setText(mEmail);
+        tvUserId.setText(mUserId);
+        tvProvider.setText(mExtra);
+    }
+
+    /*
+    * Changing email*/
 
     private void changeEmail() {
         newEmail.setVisibility(View.VISIBLE);
@@ -158,6 +218,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             progressBar.setVisibility(View.GONE);
         }
     }
+
+    /*
+     * Changing name*/
+
+    private void changeName() {
+        newName.setVisibility(View.VISIBLE);
+        changeName.setVisibility(View.VISIBLE);
+    }
+
+    private void submitChangedName() {
+        progressBar.setVisibility(View.VISIBLE);
+        if(user != null && !newName.getText().toString().trim().equals("")) {
+            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+            UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
+                    .setDisplayName(newName.getText().toString().trim())
+                    .build();
+
+            user.updateProfile(profileChangeRequest)
+                    .addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()) {
+                                Toast.makeText(MainActivity.this, "Successfully changed", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            } else {
+                                Toast.makeText(MainActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();
+                                progressBar.setVisibility(View.GONE);
+                            }
+                        }
+                    });
+        }
+    }
+
+
+    /*
+     * Changing signout*/
 
     public void signOut() {
         firebaseAuth.signOut();
