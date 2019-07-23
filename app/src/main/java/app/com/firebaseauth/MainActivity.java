@@ -1,14 +1,7 @@
 package app.com.firebaseauth;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.text.Html;
-import android.text.Spannable;
-import android.text.SpannableString;
-import android.text.Spanned;
-import android.text.style.ForegroundColorSpan;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -49,8 +41,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText password;
     @BindView(R.id.newPassword)
     EditText newPassword;
+    @BindView(R.id.confirm_password)
+    EditText confirmPassword;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
+
+    /*
+     * oldEmail
+     * newEmail
+     * newName
+     * password
+     * newPassword
+     * confirmPassword
+     *
+     * btnSubmitName
+     * btnSubmitEmail
+     * btnSubmitPassword
+     * btnSendPasswordResetEmail
+     * btnRemoveTheUser
+     * */
 
     @BindView(R.id.change_email_button)
     Button btnChangeEmail;
@@ -63,16 +72,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     @BindView(R.id.remove_user_button)
     Button btnRemoveUser;
-    @BindView(R.id.changeEmail)
-    Button changeEmail;
-    @BindView(R.id.changeName)
-    Button changeName;
-    @BindView(R.id.changePass)
-    Button changePassword;
-    @BindView(R.id.send)
-    Button sendEmail;
-    @BindView(R.id.remove)
-    Button remove;
+    @BindView(R.id.btnSubmitEmail)
+    Button btnSubmitEmail;
+    @BindView(R.id.btnSubmitName)
+    Button btnSubmitName;
+    @BindView(R.id.btnSubmitPassword)
+    Button btnSubmitPassword;
+    @BindView(R.id.btnResetEmail)
+    Button btnSendPasswordResetEmail;
+    @BindView(R.id.btnRemoveUser)
+    Button btnRemoveTheUser;
     @BindView(R.id.sign_out)
     Button signOut;
     @BindView(R.id.tv_refresh)
@@ -84,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     FirebaseUser user;
     private String mName, mEmail, mUserId;
     private String mExtra;
+    private boolean isName, isEmail, isPassword, isSendPasswordResetEmail, isRemoveUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,12 +108,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnSendResetEmail.setOnClickListener(this);
         btnRemoveUser.setOnClickListener(this);
 
-        changeEmail.setOnClickListener(this);
-        changePassword.setOnClickListener(this);
+        btnSubmitEmail.setOnClickListener(this);
+        btnSubmitPassword.setOnClickListener(this);
         changeNameButton.setOnClickListener(this);
-        changeName.setOnClickListener(this);
-        sendEmail.setOnClickListener(this);
-        remove.setOnClickListener(this);
+        btnSubmitName.setOnClickListener(this);
+        btnSendPasswordResetEmail.setOnClickListener(this);
+        btnRemoveTheUser.setOnClickListener(this);
         signOut.setOnClickListener(this);
 
         firebaseAuth = FirebaseAuth.getInstance();
@@ -129,7 +139,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         });
 
 
-
         getUserDetails();
 
 
@@ -145,25 +154,49 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (view.getId() == R.id.change_email_button) {
             changeEmail();
         } else if (view.getId() == R.id.change_password_button) {
-
+            changePassword();
         } else if (view.getId() == R.id.sending_pass_reset_button) {
-
+            sendPasswordResetEmail();
         } else if (view.getId() == R.id.remove_user_button) {
-
-        } else if (view.getId() == R.id.changeEmail) {
+            removeUser();
+        } else if (view.getId() == R.id.btnSubmitEmail) {
             submitChangedEmail();
-        } else if (view.getId() == R.id.changePass) {
-
-        } else if (view.getId() == R.id.send) {
-
-        } else if (view.getId() == R.id.remove) {
-
-        } else if(view == changeNameButton) {
+        } else if (view.getId() == R.id.btnSubmitPassword) {
+            submitChangedPassword();
+        } else if (view.getId() == R.id.btnResetEmail) {
+            submitEmailForPasswordChange();
+        } else if (view.getId() == R.id.btnRemoveUser) {
+            submitDetailsToRemoveUser();
+        } else if (view == changeNameButton) {
             changeName();
-        } else if(view == changeName) {
+        } else if (view == btnSubmitName) {
             submitChangedName();
         }
 
+    }
+
+    private void submitDetailsToRemoveUser() {
+    }
+
+    private void submitEmailForPasswordChange() {
+    }
+
+    private void submitChangedPassword() {
+    }
+
+    private void removeUser() {
+        isRemoveUser = true;
+        buttonVisibility();
+    }
+
+    private void sendPasswordResetEmail() {
+        isSendPasswordResetEmail = true;
+        buttonVisibility();
+    }
+
+    private void changePassword() {
+        isPassword = true;
+        buttonVisibility();
     }
 
     //get user details from firebase
@@ -172,7 +205,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if(user != null) {
+                if (user != null) {
                     mEmail = user.getEmail();
                     mName = user.getDisplayName();
                     mUserId = user.getUid();
@@ -189,11 +222,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     /*
-    * Changing email*/
+     * Changing email*/
 
     private void changeEmail() {
-        newEmail.setVisibility(View.VISIBLE);
-        changeEmail.setVisibility(View.VISIBLE);
+        isEmail = true;
+        buttonVisibility();
     }
 
     private void submitChangedEmail() {
@@ -223,13 +256,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
      * Changing name*/
 
     private void changeName() {
-        newName.setVisibility(View.VISIBLE);
-        changeName.setVisibility(View.VISIBLE);
+        isName = true;
+        buttonVisibility();
     }
 
     private void submitChangedName() {
         progressBar.setVisibility(View.VISIBLE);
-        if(user != null && !newName.getText().toString().trim().equals("")) {
+        if (user != null && !newName.getText().toString().trim().equals("")) {
             FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
             UserProfileChangeRequest profileChangeRequest = new UserProfileChangeRequest.Builder()
                     .setDisplayName(newName.getText().toString().trim())
@@ -239,7 +272,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     .addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()) {
+                            if (task.isSuccessful()) {
                                 Toast.makeText(MainActivity.this, "Successfully changed", Toast.LENGTH_SHORT).show();
                                 progressBar.setVisibility(View.GONE);
                             } else {
@@ -269,6 +302,47 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         };
         authStateListener.onAuthStateChanged(firebaseAuth);
+    }
+
+    private void buttonVisibility() {
+        oldEmail.setVisibility(View.GONE);
+        newEmail.setVisibility(View.GONE);
+        newName.setVisibility(View.GONE);
+        password.setVisibility(View.GONE);
+        newPassword.setVisibility(View.GONE);
+        confirmPassword.setVisibility(View.GONE);
+        btnSubmitName.setVisibility(View.GONE);
+        btnSubmitEmail.setVisibility(View.GONE);
+        btnSubmitPassword.setVisibility(View.GONE);
+        btnSendPasswordResetEmail.setVisibility(View.GONE);
+        btnRemoveTheUser.setVisibility(View.GONE);
+        if (isEmail) {
+            isEmail = false;
+            newEmail.setVisibility(View.VISIBLE);
+            btnSubmitEmail.setVisibility(View.VISIBLE);
+        } else if (isName) {
+            isName = false;
+            newName.setVisibility(View.VISIBLE);
+            btnSubmitName.setVisibility(View.VISIBLE);
+
+        } else if (isPassword) {
+            isPassword = false;
+            password.setVisibility(View.VISIBLE);
+            newPassword.setVisibility(View.VISIBLE);
+            confirmPassword.setVisibility(View.VISIBLE);
+            btnSubmitPassword.setVisibility(View.VISIBLE);
+
+        } else if (isRemoveUser) {
+            isRemoveUser = false;
+            oldEmail.setVisibility(View.VISIBLE);
+            btnRemoveTheUser.setVisibility(View.VISIBLE);
+
+        } else if (isSendPasswordResetEmail) {
+            isSendPasswordResetEmail = false;
+            oldEmail.setVisibility(View.VISIBLE);
+            btnSendPasswordResetEmail.setVisibility(View.VISIBLE);
+
+        }
     }
 
 

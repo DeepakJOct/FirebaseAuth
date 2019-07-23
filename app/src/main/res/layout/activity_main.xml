@@ -229,7 +229,18 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
-                android:hint="Old Password"
+                android:hint="Enter password"
+                android:inputType="textPassword"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:visibility="gone" />
+
+            <EditText
+                android:id="@+id/confirm_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:focusableInTouchMode="true"
+                android:hint="Re-enter password"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -247,49 +258,53 @@
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/changeName"
+                android:id="@+id/btnSubmitName"
                 style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:padding="5dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="@string/btn_change"
+                android:text="Submit Name"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/changeEmail"
+                android:id="@+id/btnSubmitEmail"
                 style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:padding="5dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="@string/btn_change"
+                android:text="Submit Email"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/changePass"
+                android:id="@+id/btnSubmitPassword"
                 style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="@string/btn_change"
+                android:text="Submit Password"
+                android:padding="5dp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/send"
+                android:id="@+id/btnResetEmail"
                 style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="@string/btn_send"
+                android:text="Reset Email"
+                android:padding="5dp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:visibility="gone" />
@@ -301,13 +316,14 @@
                 android:visibility="gone" />
 
             <Button
-                android:id="@+id/remove"
+                android:id="@+id/btnRemoveUser"
                 style="?android:textAppearanceSmall"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@color/colorPrimaryDark"
-                android:text="@string/btn_remove"
+                android:text="Remove User"
+                android:padding="5dp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
                 android:visibility="gone" />
