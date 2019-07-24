@@ -1,7 +1,9 @@
 package app.com.firebaseauth;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -13,6 +15,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,27 +42,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     EditText newName;
     @BindView(R.id.password)
     EditText password;
-    @BindView(R.id.newPassword)
-    EditText newPassword;
+    /*@BindView(R.id.newPassword)
+    EditText newPassword;*/
     @BindView(R.id.confirm_password)
     EditText confirmPassword;
     @BindView(R.id.progressBar)
     ProgressBar progressBar;
-
-    /*
-     * oldEmail
-     * newEmail
-     * newName
-     * password
-     * newPassword
-     * confirmPassword
-     *
-     * btnSubmitName
-     * btnSubmitEmail
-     * btnSubmitPassword
-     * btnSendPasswordResetEmail
-     * btnRemoveTheUser
-     * */
 
     @BindView(R.id.change_email_button)
     Button btnChangeEmail;
@@ -86,6 +74,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button signOut;
     @BindView(R.id.tv_refresh)
     TextView tvRefresh;
+    @BindView(R.id.tv_pwd_error)
+    TextView tvPwdError;
+
 
 
     private FirebaseAuth.AuthStateListener authListener;
@@ -118,6 +109,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         firebaseAuth = FirebaseAuth.getInstance();
         user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            this.finish();
+        }
 
         //If user session has timed out, send the user to login page.
         authListener = new FirebaseAuth.AuthStateListener() {
@@ -144,6 +138,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if (progressBar != null) {
             progressBar.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        firebaseAuth = FirebaseAuth.getInstance();
+        if (firebaseAuth.getCurrentUser() == null) {
+            this.finish();
         }
     }
 
@@ -182,6 +185,43 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     private void submitChangedPassword() {
+        progressBar.setVisibility(View.VISIBLE);
+        if (TextUtils.isEmpty(password.getText().toString().trim())) {
+            password.setError("Please enter a password");
+            progressBar.setVisibility(View.GONE);
+        } else if (TextUtils.isEmpty(confirmPassword.getText().toString().trim())) {
+            confirmPassword.setError("Please re-enter password");
+            progressBar.setVisibility(View.GONE);
+        } else if (!password.getText().toString().trim().equals(confirmPassword.getText().toString().trim())) {
+            Toast.makeText(this, "Passwords do not match", Toast.LENGTH_SHORT).show();
+            progressBar.setVisibility(View.GONE);
+        } else {
+            if (user != null && confirmPassword.getText().toString().trim() != null) {
+                user.updatePassword(confirmPassword.getText().toString().trim())
+                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                            @Override
+                            public void onComplete(@NonNull Task<Void> task) {
+                                if (task.isSuccessful()) {
+                                    Toast.makeText(MainActivity.this, "Password is updated, sign in with new password!", Toast.LENGTH_SHORT).show();
+                                    signOut();
+                                    progressBar.setVisibility(View.GONE);
+                                } else {
+                                    task.addOnFailureListener(new OnFailureListener() {
+                                        @Override
+                                        public void onFailure(@NonNull Exception e) {
+                                            tvPwdError.setVisibility(View.VISIBLE);
+                                            tvPwdError.setText("Error!! " + e.getMessage());
+                                        }
+                                    });
+
+                                    Toast.makeText(MainActivity.this, "Failed to update password!", Toast.LENGTH_SHORT).show();
+                                    progressBar.setVisibility(View.GONE);
+                                }
+                            }
+                        });
+            }
+
+        }
     }
 
     private void removeUser() {
@@ -309,7 +349,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         newEmail.setVisibility(View.GONE);
         newName.setVisibility(View.GONE);
         password.setVisibility(View.GONE);
-        newPassword.setVisibility(View.GONE);
+        tvPwdError.setVisibility(View.GONE);
+//        newPassword.setVisibility(View.GONE);
         confirmPassword.setVisibility(View.GONE);
         btnSubmitName.setVisibility(View.GONE);
         btnSubmitEmail.setVisibility(View.GONE);
@@ -328,7 +369,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (isPassword) {
             isPassword = false;
             password.setVisibility(View.VISIBLE);
-            newPassword.setVisibility(View.VISIBLE);
+//            newPassword.setVisibility(View.VISIBLE);
             confirmPassword.setVisibility(View.VISIBLE);
             btnSubmitPassword.setVisibility(View.VISIBLE);
 

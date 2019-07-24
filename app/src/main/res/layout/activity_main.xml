@@ -69,6 +69,7 @@
                         android:layout_weight="0.2"
                         android:textStyle="bold|italic"
                         android:textColor="#ed2405"
+                        android:background="@drawable/btn_click"
                         android:gravity="center_horizontal"
                         android:text="Refresh" />
 
@@ -229,7 +230,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:focusableInTouchMode="true"
-                android:hint="Enter password"
+                android:hint="Enter new password"
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
@@ -244,9 +245,10 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
-            <EditText
+
+            <!--<EditText
                 android:id="@+id/newPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -255,7 +257,7 @@
                 android:inputType="textPassword"
                 android:maxLines="1"
                 android:singleLine="true"
-                android:visibility="gone" />
+                android:visibility="gone" />-->
 
             <Button
                 android:id="@+id/btnSubmitName"
@@ -294,7 +296,7 @@
                 android:padding="5dp"
                 android:textColor="@android:color/white"
                 android:textStyle="bold"
-                android:visibility="gone" />
+                android:visibility="visible" />
 
             <Button
                 android:id="@+id/btnResetEmail"
@@ -314,6 +316,18 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/tv_pwd_error"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="5dp"
+                android:text="Password error"
+                android:layout_marginTop="5dp"
+                android:textColor="#ed2405"
+                android:textStyle="bold"
+                android:textSize="18dp"
+                android:visibility="gone"/>
 
             <Button
                 android:id="@+id/btnRemoveUser"
