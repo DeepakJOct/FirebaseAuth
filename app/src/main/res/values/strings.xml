@@ -7,7 +7,7 @@
     <string name="change_email">Change Email</string>
     <string name="change_password">Change Password</string>
     <string name="send_password_reset_email">Send Password reset email</string>
-    <string name="remove_user">Remove user</string>
+    <string name="remove_user">Remove agent</string>
     <string name="new_pass">New Password</string>
     <string name="title_activity_profile">Firebase</string>
     <string name="title_activity_login">Sign in</string>
@@ -30,4 +30,18 @@
     <string name="forgot_password_msg">We just need your registered Email Id to sent you password reset instructions.</string>
     <string name="change_name">Change Name</string>
     <string name="new_name">New Name</string>
+    <string name="agent_details">Agent Details</string>
+    <string name="name">Name:</string>
+    <string name="email_colon">Email:</string>
+    <string name="user_id">User Id:</string>
+    <string name="provider">Provider:</string>
+    <string name="enter_new_password">Enter new password</string>
+    <string name="re_enter_password">Re-enter password</string>
+    <string name="submit_name">Submit Name</string>
+    <string name="submit_email">Submit Email</string>
+    <string name="submit_password">Submit Password</string>
+    <string name="reset_email">Reset Email</string>
+    <string name="password_error">Password error</string>
+    <string name="remove_agent">Remove Agent</string>
+    <string name="confirm_details">I confirm that the above details fetched during the pre investigation are evaluated to highest level of intelligence.</string>
 </resources>
