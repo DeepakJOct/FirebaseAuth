@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AgentDetailsActivity">
+
+    <RelativeLayout
+        android:id="@+id/rl_main_left"
+        android:layout_width="match_parent"
+        android:layout_height="345dp"
+        android:background="@color/fui_bgGitHub"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="155dp"
+        android:translationZ="1dp"
+        >
+
+        <ImageView
+            android:id="@+id/imv_profile"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/agent"/>
+
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rl_main"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/fui_linkColor"
+        android:layout_marginStart="50dp"
+        android:layout_marginEnd="2dp"
+        >
+
+        <LinearLayout
+            android:id="@+id/ll_details"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:padding="10dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="120dp"
+                android:layout_marginStart="-15dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/cia"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agent Name: "/>
+
+            <TextView
+                android:id="@+id/tv_agent_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="I am an Agent"
+                android:textColor="@color/white"/>
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/fui_bgPhone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email: "/>
+
+            <TextView
+                android:id="@+id/tv_agent_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="agent6363@cia.com"
+                android:textColor="@color/white"/>
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/fui_bgPhone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agent Id: "/>
+
+            <TextView
+                android:id="@+id/tv_agent_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="36956AA99hgl63"
+                android:textColor="@color/white"/>
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/fui_bgPhone"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Provider: "/>
+
+            <TextView
+                android:id="@+id/tv_agent_provider"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Firebase"
+                android:textColor="@color/white"/>
+
+            <View
+                android:layout_width="150dp"
+                android:layout_height="0.5dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="5dp"
+                android:background="@color/fui_bgPhone"/>
+
+
+        </LinearLayout>
+
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_margin="5dp"
+                android:weightSum="1">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_back"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/fui_bgGitHub"
+                    android:text="Back"
+                    android:textColor="@color/white"
+                    android:layout_marginEnd="5dp"
+                    android:layout_weight="0.5"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btn_edit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:text="EDIT"
+                    android:textColor="@color/fui_bgGitHub"
+                    android:backgroundTint="@color/white"
+                    android:layout_weight="0.5"/>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ll_details">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="20dp"
+                android:orientation="horizontal">
+
+                <!-- layout 1 -->
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Total Investigations"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_total_investigations"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="285"
+                        android:textColor="#d6630b"
+                        android:textSize="40dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+                <View
+                    android:layout_width="0.1dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/fui_buttonShadow"/>
+
+                <!-- layout 2 -->
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:padding="5dp"
+                        android:text="Current Sheet Progress"
+                        android:textColor="@color/white"
+                        android:textSize="16dp" />
+
+                    <TextView
+                        android:id="@+id/tv_current_sheet_progress"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="86.25%"
+                        android:textColor="#d6630b"
+                        android:textSize="40dp"
+                        android:textStyle="bold" />
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>

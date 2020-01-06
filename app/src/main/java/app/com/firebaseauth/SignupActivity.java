@@ -14,13 +14,14 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 
 public class SignupActivity extends AppCompatActivity implements View.OnClickListener {
 
     private EditText inputEmail, inputPassword;
-    private Button btnSignIn, btnSignUp, btnResetPassword;
+    private MaterialButton btnSignIn, btnSignUp, btnResetPassword;
     private ProgressBar progressBar;
     private FirebaseAuth firebaseAuth;
 
@@ -31,12 +32,12 @@ public class SignupActivity extends AppCompatActivity implements View.OnClickLis
 
         firebaseAuth = FirebaseAuth.getInstance();
 
-        btnSignIn = (Button) findViewById(R.id.sign_in_button);
-        btnSignUp = (Button) findViewById(R.id.sign_up_button);
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        btnResetPassword = (Button) findViewById(R.id.btn_reset_password);
+        btnSignIn = findViewById(R.id.sign_in_button);
+        btnSignUp = findViewById(R.id.sign_up_button);
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
+        progressBar = findViewById(R.id.progressBar);
+        btnResetPassword = findViewById(R.id.btn_reset_password);
 
         btnSignIn.setOnClickListener(this);
         btnSignUp.setOnClickListener(this);

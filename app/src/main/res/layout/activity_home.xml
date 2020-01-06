@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:alpha="0.8"
+        android:src="@drawable/cia_logo"
+        android:visibility="visible" />
+
+    <LinearLayout
+        android:id="@+id/ll_caption"
+        android:layout_width="match_parent"
+        android:layout_below="@id/logo"
+        android:layout_height="150dp"
+        android:background="@drawable/business"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/caption"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="10dp"
+            android:text="THE WORK OF A NATION"
+            android:textAllCaps="true"
+            android:textColor="@color/fui_bgGitHub"
+            android:textSize="14sp"
+            android:visibility="visible" />
+
+        <TextView
+            android:id="@+id/caption1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="25dp"
+            android:text="THE CENTER OF INTELLIGENCE"
+            android:textAllCaps="true"
+            android:textColor="@color/fui_bgGitHub"
+            android:textSize="14sp"
+            android:visibility="visible" />
+
+    </LinearLayout>
+
+
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_profile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="55dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:text="Agent Profile on CIA"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_below="@+id/ll_caption"
+        android:padding="5dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_form"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="55dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:text="Upload Evidence - Pre Investigation"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_below="@+id/btn_profile"
+        android:padding="5dp"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_signout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="55dp"
+        android:layout_marginStart="4dp"
+        android:layout_marginEnd="4dp"
+        android:text="SIGN OUT"
+        android:backgroundTint="@color/colorPrimaryDark"
+        android:layout_below="@+id/btn_form"
+        android:padding="5dp"/>
+
+
+
+</RelativeLayout>

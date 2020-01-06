@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:visibility="visible"
+    android:orientation="vertical"
+    android:padding="5dp"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:gravity="center"
+        android:padding="5dp"
+        android:text="PRIMARY CRIME FORM - C99 (TO BE FILLED BY FILING AGENT)"
+        android:textSize="12sp"
+        android:textColor="@color/fui_bgGitHub"
+        android:textAllCaps="true" />
+
+    <LinearLayout
+        android:id="@+id/ll_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:padding="5dp"
+            android:text="Name of the suspect: "
+            android:textSize="10sp"
+            android:textColor="@color/fui_bgGitHub"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/et_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:background="@drawable/background_edit_text"
+            android:textSize="10sp"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_age"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:padding="5dp"
+            android:text="Age:"
+            android:textSize="10sp"
+            android:textColor="@color/fui_bgGitHub"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/et_age"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:background="@drawable/background_edit_text"
+            android:inputType="number"
+            android:textSize="10sp"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_gender"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_gender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:padding="5dp"
+            android:text="Gender:"
+            android:textSize="10sp"
+            android:textColor="@color/fui_bgGitHub"
+            android:textAllCaps="true" />
+
+        <RadioGroup
+            android:id="@+id/rg_gender"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="0.7"
+            android:orientation="horizontal">
+
+            <RadioButton
+                android:id="@+id/rb_male"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:buttonTint="@color/fui_bgGitHub"
+                android:textSize="10sp"
+                android:text="Male" />
+
+            <RadioButton
+                android:id="@+id/rb_female"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:buttonTint="@color/fui_bgGitHub"
+                android:textSize="10sp"
+                android:text="Female" />
+
+            <RadioButton
+                android:id="@+id/rb_other"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="3dp"
+                android:buttonTint="@color/fui_bgGitHub"
+                android:textSize="10sp"
+                android:text="Other" />
+
+        </RadioGroup>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_marks"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_marks"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:textSize="10sp"
+            android:text="Identification Marks:"
+            android:textColor="@color/fui_bgGitHub"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/et_marks"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:background="@drawable/background_edit_text"
+            android:focusableInTouchMode="true"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:textSize="10sp"
+            android:scrollIndicators="right"
+            android:scrollbars="vertical" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_add"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_add"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:padding="5dp"
+            android:text="Address:"
+            android:textAllCaps="true"
+            android:textColor="@color/fui_bgGitHub"
+            android:textSize="10sp" />
+
+        <EditText
+            android:id="@+id/et_add"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:background="@drawable/background_edit_text"
+            android:focusableInTouchMode="true"
+            android:gravity="top|left"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:padding="5dp"
+            android:scrollIndicators="right"
+            android:scrollbars="vertical"
+            android:textColor="@color/fui_bgGitHub"
+            android:textSize="10sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_dept"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_dept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:padding="5dp"
+            android:textSize="10sp"
+            android:textColor="@color/fui_bgGitHub"
+            android:text="Case Lodged/Re-opened By:"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/et_dept"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:background="@drawable/background_edit_text"
+            android:textSize="10sp"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_contact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:padding="5dp"
+            android:textSize="10sp"
+            android:textColor="@color/fui_bgGitHub"
+            android:text="Contact Name &amp; Number:"
+            android:textAllCaps="true" />
+
+        <EditText
+            android:id="@+id/et_contact"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:background="@drawable/background_edit_text"
+            android:inputType="text"
+            android:textSize="10sp"
+            android:padding="5dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_profile_pic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:gravity="start"
+        android:weightSum="1">
+
+        <TextView
+            android:id="@+id/tv_pic"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.3"
+            android:padding="5dp"
+            android:text="Upload picture(s):"
+            android:textAllCaps="true"
+            android:textColor="@color/fui_bgGitHub"
+            android:textSize="10sp" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.7"
+            android:background="@drawable/background_edit_text"
+            android:orientation="horizontal"
+            android:textAllCaps="true"
+            android:weightSum="1">
+
+            <TextView
+                android:id="@+id/tv_upload_pic"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center_vertical"
+                android:layout_weight="0.65"
+                android:gravity="center_vertical"
+                android:hint="Choose from file.."
+                android:padding="6dp"
+                android:textSize="10sp"
+                android:textAllCaps="true" />
+
+            <Button
+                android:id="@+id/btn_upload"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:layout_weight="0.32"
+                android:backgroundTint="@color/fui_bgGitHub"
+                android:text="Upload"
+                android:textSize="10sp"
+                android:textColor="@color/white" />
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+    <CheckBox
+        android:id="@+id/chk_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="3dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="3dp"
+        android:layout_marginBottom="8dp"
+        android:padding="5dp"
+        android:textSize="10sp"
+        android:text="@string/confirm_details" />
+
+    <Button
+        android:id="@+id/btn_submit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/btn_click"
+        android:textSize="10sp"
+        android:text="Submit" />
+
+</LinearLayout>

@@ -4,6 +4,13 @@ buildscript {
     repositories {
         google()
         jcenter()
+        maven {
+            url "http://phonepe.bintray.com/PhonePeThinAndroidSDK-SNAPSHOT"
+            credentials {
+                username 'phonepe_android_thinsdk_snapshot_key@phonepe'
+                password 'cf5f50936599c5dbbde28aa59c8a471c131e4736'
+            }
+        }
         
     }
     dependencies {

@@ -3,11 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="app.com.firebaseauth">
 
-    <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-
-
     <application
         android:allowBackup="true"
         android:appComponentFactory=""
@@ -17,18 +12,40 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:appComponentFactory">
-        <activity android:name=".MainActivity"
-            android:theme="@style/AppTheme1"></activity>
-        <activity android:name=".ResetPasswordActivity" />
-        <activity android:name=".SignupActivity" />
+        <activity android:name=".AgentDetailsActivity"/>
+        <activity android:name=".HomeActivity" />
+        <activity
+            android:name=".MainActivity"
+            android:theme="@style/AppTheme1" />
+        <activity android:name=".ResetPasswordActivity" /> <!-- Keep it false in production environment -->
+        <activity android:name=".SignupActivity" /> <!-- Keep it false in production environment -->
         <activity android:name=".ProfileActivity" />
         <activity android:name=".LoginActivity">
             <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <meta-data
+            android:name="com.phonepe.android.sdk.MerchantId"
+            android:value="M2306160483220675579140" />
+        <meta-data
+            android:name="com.phonepe.android.sdk.AppId"
+            android:value="8289e078-be0b-484d-ae60-052f117f8deb" />
+        <meta-data
+            android:name="com.phonepe.android.sdk.Debuggable"
+            android:value="true" />
+        <meta-data
+            android:name="com.phonepe.android.sdk.isUAT"
+            android:value="true" />
     </application>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.READ_SMS" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
 </manifest>

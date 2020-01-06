@@ -29,24 +29,19 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
-import com.google.firebase.storage.OnProgressListener;
-import com.google.firebase.storage.StorageException;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.File;
-import java.io.IOException;
+import java.nio.charset.Charset;
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.UUID;
 
 import app.com.firebaseauth.models.PreInvestigationDetails;
+import app.com.firebaseauth.utils.Form;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -121,6 +116,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     @BindView(R.id.btn_upload)
     Button btnUpload;
 
+    @BindView(R.id.tv_phone_pe)
+    TextView tvPhonePe;
+
     private boolean isLayoutShowing = false;
     Timer timer;
     private ProfileActivity profileActivity;
@@ -136,6 +134,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private DatabaseReference mDatabase;
 
     private final int PICK_IMAGE_REQUEST = 71;
+    private boolean isImageUploaded = false;
+    private PreInvestigationDetails investigatedData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -147,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         tvHead.setOnClickListener(this);
         tvAgent.setOnClickListener(this);
         btnUpload.setOnClickListener(this);
+        tvPhonePe.setOnClickListener(this);
 
         rgGender.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -190,7 +191,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         } else if (view == tvUploadPic) {
             chooseImage();
         } else if (view == btnUpload) {
-            uploadImage();
+            uploadImage(true);
         } else if (view == btnSubmit) {
             if (validations()) {
                 name = etName.getText().toString().trim();
@@ -207,12 +208,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                         + gender + "\n"
                         + address + "\n" + marks + "\n" + dept + "\n" + contact + "\n" + isDetailsConfirmed + "\n", Toast.LENGTH_SHORT).show();
                 //send all these details to the firebase database
-                PreInvestigationDetails investigatedData = new PreInvestigationDetails(
+                investigatedData = new PreInvestigationDetails(
                         name, gender, marks, address, dept, contact, Integer.parseInt(age), isDetailsConfirmed
                 );
                 //Uploading mode data to firebase
-                uploadData(investigatedData);
+                if (isImageUploaded) {
+                    uploadData(investigatedData);
+                } else {
+                    uploadImage(false);
+                }
             }
+        } else if (view == tvPhonePe) {
+
         }
     }
 
@@ -285,10 +292,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void uploadImage() {
+    private void uploadImage(boolean isByUser) {
         if (filePath != null) {
             pd = new ProgressDialog(this);
-            pd.setTitle("Uploading...");
+            pd.setTitle("Uploading Image Data...");
             pd.show();
 
             StorageReference childRef = storageRef.child("Photos").child(filePath.getLastPathSegment().toString());
@@ -303,6 +310,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     tvUploadPic.setClickable(false);
                     btnUpload.setText("Uploaded");
                     btnUpload.setAlpha(0.5f);
+                    isImageUploaded = true;
+                    if(!isByUser) {
+                        if(investigatedData != null) {
+                            uploadData(investigatedData);
+                        }
+                    }
                 }
             }).addOnFailureListener(new OnFailureListener() {
                 @Override
@@ -319,14 +332,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     private void uploadData(PreInvestigationDetails data) {
         pd = new ProgressDialog(this);
-        pd.setTitle("Saving...");
+        pd.setTitle("Uploading Investigation Data...");
         pd.show();
         user = FirebaseAuth.getInstance().getCurrentUser();
         mDatabase = FirebaseDatabase.getInstance().getReference();
-        mDatabase.child("investigation_data").child(user.getDisplayName()).setValue(data)
+        mDatabase.child("investigation_data").child(user.getDisplayName()).push().setValue(data)
                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                     @Override
                     public void onSuccess(Void aVoid) {
+                        clearFormData();
                         pd.dismiss();
                         Toast.makeText(MainActivity.this, "Details saved successfully", Toast.LENGTH_SHORT).show();
                     }
@@ -339,6 +353,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
                     }
                 });
+    }
+
+    public void clearFormData() {
+        Form.clear(etAdd);
+        Form.clear(etAge);
+        Form.clear(etContact);
+        Form.clear(etDept);
+        Form.clear(etMarks);
+        Form.clear(etName);
+        tvUploadPic.setText("");
+        tvUploadPic.setClickable(true);
+        btnUpload.setClickable(true);
+        btnUpload.setText("Upload");
+        btnUpload.setAlpha(0);
+        chkConfirm.setChecked(false);
+        rbFemale.setChecked(false);
+        rbMale.setChecked(false);
+        rbOther.setChecked(false);
     }
 
 }
